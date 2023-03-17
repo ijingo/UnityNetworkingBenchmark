@@ -12,6 +12,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
 
         void Awake()
         {
+            Debug.Log("NetworkServer.active=" +  NetworkServer.active);
             if (NetworkServer.active)
             {
                 physicsScene = gameObject.scene.GetPhysicsScene();

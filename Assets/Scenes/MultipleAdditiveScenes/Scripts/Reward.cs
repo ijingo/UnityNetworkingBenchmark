@@ -42,7 +42,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
                 player.GetComponent<PlayerScore>().score += points;
 
                 // spawn a replacement
-                Spawner.SpawnReward(gameObject.scene);
+                RewardSpawner.SpawnReward(gameObject.scene);
 
                 // destroy this one
                 NetworkServer.Destroy(gameObject);

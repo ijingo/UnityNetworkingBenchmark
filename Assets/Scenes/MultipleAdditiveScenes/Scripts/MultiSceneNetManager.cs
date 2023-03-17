@@ -11,6 +11,8 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         [Header("Spawner Setup")]
         [Tooltip("Reward Prefab for the Spawner")]
         public GameObject rewardPrefab;
+        [Tooltip("Icosphere Prefab for the Spawner")]
+        public GameObject icospherePrefab;
 
         [Header("MultiScene Setup")]
         public int instances = 3;
@@ -105,7 +107,8 @@ namespace Mirror.Examples.MultipleAdditiveScenes
 
                 Scene newScene = SceneManager.GetSceneAt(index);
                 subScenes.Add(newScene);
-                Spawner.InitialSpawn(newScene);
+                RewardSpawner.InitialSpawn(newScene);
+                IcosphereSpawner.InitialSpawn(newScene);
             }
 
             subscenesLoaded = true;
