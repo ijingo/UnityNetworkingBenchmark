@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\MultiSceneNetManager.cs" />
+     <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\ShowFPS.cs" />
      <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\PlayerCamera.cs" />
      <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\RandomColor.cs" />
      <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\PlayerController.cs" />
@@ -50,10 +51,9 @@
      <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\Reward.cs" />
      <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\PhysicsSimulator.cs" />
      <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\Spawner.cs" />
+     <Compile Include="Assets\Scenes\MultipleAdditiveScenes\Scripts\Icosphere.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Prefabs" />
-     <None Include="Assets\ScriptTemplates\51-Mirror__Network Authenticator-NewNetworkAuthenticator.cs.txt" />
-     <None Include="Assets\ScriptTemplates\56-Mirror__Network Discovery-NewNetworkDiscovery.cs.txt" />
      <Folder Include="Assets\Mirror\Plugins" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Models" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Materials\Physics" />
@@ -61,20 +61,13 @@
      <None Include="Assets\Mirror\Version.txt" />
      <None Include="Assets\Mirror\Readme.txt" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Materials\Render" />
-     <None Include="Assets\ScriptTemplates\57-Mirror__Network Transform-NewNetworkTransform.cs.txt" />
-     <None Include="Assets\ScriptTemplates\52-Mirror__Network Behaviour-NewNetworkBehaviour.cs.txt" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes" />
      <None Include="Assets\Mirror\Notice.txt" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Models\Icosphere" />
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\License.txt" />
-     <None Include="Assets\ScriptTemplates\55-Mirror__Network Room Player-NewNetworkRoomPlayer.cs.txt" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Models\Icosphere\Materials" />
      <Folder Include="Assets\Mirror" />
-     <Folder Include="Assets\ScriptTemplates" />
-     <None Include="Assets\ScriptTemplates\53-Mirror__Custom Interest Management-CustomInterestManagement.cs.txt" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Scripts" />
-     <None Include="Assets\ScriptTemplates\50-Mirror__Network Manager-NewNetworkManager.cs.txt" />
-     <None Include="Assets\ScriptTemplates\54-Mirror__Network Room Manager-NewNetworkRoomManager.cs.txt" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\Mirror\Plugins\Mono.Cecil" />
      <Folder Include="Assets\Scenes\MultipleAdditiveScenes\Materials" />

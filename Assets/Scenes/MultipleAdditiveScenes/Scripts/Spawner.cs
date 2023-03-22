@@ -39,9 +39,9 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         internal static void SpawnIcosphere(Scene scene)
         {
             Vector3 spawnPosition = new Vector3(Random.Range(-range + 1, range), 1, Random.Range(-range + 1, range));
-            GameObject reward = Object.Instantiate(((MultiSceneNetManager)NetworkManager.singleton).icospherePrefab, spawnPosition, Quaternion.identity);
-            SceneManager.MoveGameObjectToScene(reward, scene);
-            NetworkServer.Spawn(reward);
+            GameObject icosphere = Object.Instantiate(((MultiSceneNetManager)NetworkManager.singleton).icospherePrefab, spawnPosition, Quaternion.identity);
+            SceneManager.MoveGameObjectToScene(icosphere, scene);
+            NetworkServer.Spawn(icosphere);
         }
     }
 }

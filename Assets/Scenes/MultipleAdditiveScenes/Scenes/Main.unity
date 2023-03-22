@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 69965667}
   - component: {fileID: 69965671}
   - component: {fileID: 69965668}
+  - component: {fileID: 69965672}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -281,6 +282,7 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 1139254171913846, guid: 8cec47ed46e0eff45966a5173d3aa0d3, type: 3}
+  - {fileID: 5513112217680870098, guid: a104de86221e66a48832c222471d4f1e, type: 3}
   timeInterpolationGui: 0
   rewardPrefab: {fileID: 1139254171913846, guid: 8cec47ed46e0eff45966a5173d3aa0d3, type: 3}
   icospherePrefab: {fileID: 5513112217680870098, guid: a104de86221e66a48832c222471d4f1e, type: 3}
@@ -328,6 +330,34 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
+--- !u!114 &69965672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69965666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d7da4e566d24ea7b0e12178d934b648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clientIntervalReceivedPackets: 0
+  clientIntervalReceivedBytes: 0
+  clientIntervalSentPackets: 0
+  clientIntervalSentBytes: 0
+  clientReceivedPacketsPerSecond: 0
+  clientReceivedBytesPerSecond: 0
+  clientSentPacketsPerSecond: 0
+  clientSentBytesPerSecond: 0
+  serverIntervalReceivedPackets: 0
+  serverIntervalReceivedBytes: 0
+  serverIntervalSentPackets: 0
+  serverIntervalSentBytes: 0
+  serverReceivedPacketsPerSecond: 0
+  serverReceivedBytesPerSecond: 0
+  serverSentPacketsPerSecond: 0
+  serverSentBytesPerSecond: 0
 --- !u!1 &204334129
 GameObject:
   m_ObjectHideFlags: 0

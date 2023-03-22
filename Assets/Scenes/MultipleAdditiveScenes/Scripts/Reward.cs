@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Mirror.Examples.MultipleAdditiveScenes
