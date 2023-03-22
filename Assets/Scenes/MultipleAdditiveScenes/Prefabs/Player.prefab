@@ -199,8 +199,11 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
+  chasingTarget: {fileID: 0}
+  hasTarget: 0
   characterController: {fileID: 143011667059871024}
   moveSpeedMultiplier: 20
+  autoMoveSpeedMultiplier: 10
   maxTurnSpeed: 150
   turnDelta: 5
   initialJumpSpeed: 0.2

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Mirror.Examples.MultipleAdditiveScenes
@@ -7,6 +10,17 @@ namespace Mirror.Examples.MultipleAdditiveScenes
     {
         public bool available = true;
         public RandomColor randomColor;
+        private PlayerController _localChasingPlayer;
+
+        public void SetChasingPlayer(PlayerController playerController)
+        {
+            _localChasingPlayer = playerController;
+        }
+        
+        public void ClearChasingPlayer()
+        {
+            _localChasingPlayer = null;
+        }
 
         void OnValidate()
         {
@@ -46,6 +60,15 @@ namespace Mirror.Examples.MultipleAdditiveScenes
 
                 // destroy this one
                 NetworkServer.Destroy(gameObject);
+            }
+        }
+
+        [ClientCallback]
+        public void OnDestroy()
+        {
+            if (_localChasingPlayer)
+            {
+                _localChasingPlayer.ClearTarget();
             }
         }
     }

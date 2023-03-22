@@ -38,6 +38,8 @@ namespace Mirror.Examples.MultipleAdditiveScenes
                     rigidbody3D.AddForce(direction * force * .5f);
                 else
                     rigidbody3D.AddForce(direction * force);
+                
+                other.gameObject.GetComponent<PlayerController>().TargetClearTarget(other.gameObject.GetComponent<NetworkIdentity>().connectionToClient);
             }
         }
     }

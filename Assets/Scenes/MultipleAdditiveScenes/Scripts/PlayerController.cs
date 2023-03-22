@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Mirror.Examples.MultipleAdditiveScenes
 {
@@ -8,6 +11,9 @@ namespace Mirror.Examples.MultipleAdditiveScenes
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : NetworkBehaviour
     {
+        public GameObject chasingTarget;
+        public bool hasTarget;
+        
         public enum GroundState : byte { Jumping, Falling, Grounded }
 
         [Header("Avatar Components")]
@@ -16,6 +22,8 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         [Header("Movement")]
         [Range(1, 20)]
         public float moveSpeedMultiplier = 8f;
+        [Range(1, 20)]
+        public float autoMoveSpeedMultiplier = 2f;
 
         [Header("Turning")]
         [Range(1f, 200f)]
@@ -54,6 +62,34 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         public Vector3Int velocity;
         public Vector3 direction;
 
+        public void ClearTarget()
+        {
+            hasTarget = false;
+            chasingTarget = null;
+        }
+
+        [TargetRpc]
+        public void TargetClearTarget(NetworkConnectionToClient conn)
+        {
+            hasTarget = false;
+            chasingTarget = null;
+        }
+
+        public void OnDestroy()
+        {
+            if (hasTarget && isOwned)
+            {
+                if (chasingTarget)
+                {
+                    if (chasingTarget.CompareTag("Prize"))
+                    {
+                        Reward reward = chasingTarget.GetComponent<Reward>();
+                        reward.ClearChasingPlayer();
+                    }
+                }
+            }
+        }
+
         void OnValidate()
         {
             if (characterController == null)
@@ -80,11 +116,67 @@ namespace Mirror.Examples.MultipleAdditiveScenes
             this.enabled = false;
             characterController.enabled = false;
         }
+        
+        [Client]
+        void findChasingTarget()
+        {
+            GameObject[] prizes = GameObject.FindGameObjectsWithTag("Prize");
+            GameObject[] Icospheres = GameObject.FindGameObjectsWithTag("Icosphere");
+
+            List<GameObject> list = new List<GameObject>();
+            list.AddRange(prizes);
+            list.AddRange(Icospheres);
+
+            var random = new Random();
+            int index = random.Next(list.Count);
+
+            chasingTarget = list[index];
+            hasTarget = true;
+
+            if (chasingTarget.CompareTag("Prize"))
+            {
+                Reward reward = chasingTarget.GetComponent<Reward>();
+                reward.SetChasingPlayer(this);
+            }
+        }
+        
+        void moveTowardsTheTarget()
+        {
+            // // rotate to the target.
+            transform.LookAt(chasingTarget.transform);
+            
+            // move to the target
+            direction = chasingTarget.transform.position - transform.position;
+            
+            var rotateDirection = Vector3.ClampMagnitude(direction, 1f);
+            transform.Rotate(rotateDirection);
+            
+            // // Clamp so diagonal strafing isn't a speed advantage.
+            direction = Vector3.ClampMagnitude(direction, 1f);
+            // // Transforms direction from local space to world space.
+            // direction = transform.TransformDirection(direction);
+            // Multiply for desired ground speed.
+            direction *= autoMoveSpeedMultiplier;
+            // Finally move the character.
+            characterController.Move(direction * Time.deltaTime);
+        }
 
         void Update()
         {
             if (!characterController.enabled)
                 return;
+
+            if (isLocalPlayer)
+            {
+                if (!hasTarget)
+                {
+                    findChasingTarget();
+                }
+                else
+                {
+                    moveTowardsTheTarget();
+                }
+            }
 
             HandleTurning();
             HandleJumping();
