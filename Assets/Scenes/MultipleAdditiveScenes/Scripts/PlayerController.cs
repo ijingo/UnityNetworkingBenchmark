@@ -166,7 +166,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
             if (!characterController.enabled)
                 return;
 
-            if (isLocalPlayer)
+            if (isLocalPlayer && Configuration.autoControl)
             {
                 if (!hasTarget)
                 {

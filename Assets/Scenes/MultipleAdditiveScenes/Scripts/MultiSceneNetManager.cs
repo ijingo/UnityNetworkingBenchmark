@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,60 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         int clientIndex;
 
         public static new MultiSceneNetManager singleton { get; private set; }
+
+        public override void Start()
+        {
+            Application.targetFrameRate = 60;
+            
+            base.Start();
+#if UNITY_SERVER
+            StartCoroutine("StartHeadless");
+#endif
+        }
+        
+        IEnumerator StartHeadless()
+        {
+            Debug.Log("Server: - file - s");
+            Debug.Log("Client: - file - c - hostIP - hostPort - enableAuto");
+       
+        
+            string[] args = Environment.GetCommandLineArgs();
+            Debug.Log("args = " + string.Join(",", args));
+        
+            if (args == null || (args != null && args.Length <= 1))
+            {
+                Debug.Log("Starting a default server setup.");
+                StartServer();
+            }
+            else
+            {
+                if (args.Length >= 3 && args[2] != "0")
+                {
+                    networkAddress = args[2];
+                }
+        
+                if (args.Length >= 4 && args[3] != "0")
+                {
+                }
+
+                if (args.Length >= 5 && args[4] != "0")
+                {
+                    Configuration.autoControl = bool.Parse(args[4]);
+                }
+
+                yield return new WaitForSeconds(1.0f);
+
+                if (args[1] == "s")
+                {
+                    StartServer();
+                }
+                else if (args[1] == "c")
+                {
+                    yield return new WaitForSeconds(UnityEngine.Random.Range(0.0f, 2.0f));
+                    StartClient();
+                }
+            }
+        }
 
         /// <summary>
         /// Runs on both Server and Client
