@@ -1,6 +1,5 @@
 using FishNet.Object;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // This sets up the scene camera for the local player
 
@@ -41,7 +40,8 @@ namespace Benchmark.Fishnet
                 if (mainCam != null)
                 {
                     mainCam.transform.SetParent(null);
-                    // SceneManager.MoveGameObjectToScene(mainCam.gameObject, SceneManager.GetActiveScene());
+                    UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(
+                        mainCam.gameObject, UnityEngine.SceneManagement.SceneManager.GetActiveScene());
                     mainCam.orthographic = true;
                     mainCam.orthographicSize = 15f;
                     mainCam.transform.localPosition = new Vector3(0f, 70f, 0f);

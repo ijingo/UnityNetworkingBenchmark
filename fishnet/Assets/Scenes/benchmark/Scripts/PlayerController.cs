@@ -1,3 +1,4 @@
+using FishNet.Connection;
 using FishNet.Object;
 using UnityEngine;
 
@@ -57,21 +58,40 @@ namespace Benchmark.Fishnet
         public Vector3Int velocity;
         public Vector3 direction;
 
-        // void OnValidate()
-        // {
-        //     if (characterController == null)
-        //         characterController = GetComponent<CharacterController>();
-        //
-        //     // Override CharacterController default values
-        //     characterController.enabled = false;
-        //     characterController.skinWidth = 0.02f;
-        //     characterController.minMoveDistance = 0f;
-        //
-        //     GetComponent<Rigidbody>().isKinematic = true;
-        //
-        //     this.enabled = false;
-        // }
+        protected override void OnValidate()
+        {
+            if (characterController == null)
+                characterController = GetComponent<CharacterController>();
+        
+            // Override CharacterController default values
+            characterController.enabled = false;
+            characterController.skinWidth = 0.02f;
+            characterController.minMoveDistance = 0f;
+        
+            GetComponent<Rigidbody>().isKinematic = true;
+        
+            this.enabled = false;
+        }
 
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            if (IsOwner)
+            {
+                characterController.enabled = true;
+                this.enabled = true;
+            }
+        }
+        
+        public override void OnStopClient()
+        {
+            base.OnStopClient();
+            if (IsOwner)
+            {
+                characterController.enabled = false;
+                this.enabled = false;
+            }
+        }
         
         void Update()
         {
