@@ -37,9 +37,9 @@ namespace Benchmark.Fishnet
                 direction = direction.normalized;
 
                 rigidbody3D.AddForce(direction * force);
-                
-                // TODO: TargetRPC
-                // other.gameObject.GetComponent<PlayerController>().TargetClearTarget(other.gameObject.GetComponent<NetworkIdentity>().connectionToClient);
+
+                other.gameObject.GetComponent<PlayerController>()
+                    .TargetClearTarget(other.gameObject.GetComponent<NetworkObject>().Owner);
             }
         }
     }

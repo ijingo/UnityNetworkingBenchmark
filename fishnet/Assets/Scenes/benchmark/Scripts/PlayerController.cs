@@ -1,17 +1,25 @@
+using System.Collections.Generic;
+using FishNet.Component.Transforming;
 using FishNet.Connection;
 using FishNet.Object;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Benchmark.Fishnet
 {
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(CharacterController))]
-    // [RequireComponent(typeof(Transform))]
+    [RequireComponent(typeof(NetworkTransform))]
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : NetworkBehaviour
     {
         public enum GroundState : byte { Jumping, Falling, Grounded }
+        
+        private static int range = 30;
 
+        public GameObject chasingTarget;
+        public bool hasTarget;
+        
         [Header("Avatar Components")]
         public CharacterController characterController;
 
@@ -72,6 +80,19 @@ namespace Benchmark.Fishnet
         
             this.enabled = false;
         }
+        
+        public void ClearTarget()
+        {
+            hasTarget = false;
+            chasingTarget = null;
+        }
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            Vector3 spawnPosition = new Vector3(UnityEngine.Random.Range(-range + 1, range), 1, UnityEngine.Random.Range(-range + 1, range));
+            transform.position = spawnPosition;
+        }
 
         public override void OnStartClient()
         {
@@ -93,6 +114,57 @@ namespace Benchmark.Fishnet
             }
         }
         
+        [Client]
+        void findChasingTarget()
+        {
+            GameObject[] prizes = GameObject.FindGameObjectsWithTag("Prize");
+            GameObject[] Icospheres = GameObject.FindGameObjectsWithTag("Icosphere");
+
+            List<GameObject> list = new List<GameObject>();
+            list.AddRange(prizes);
+            list.AddRange(Icospheres);
+
+            var random = new Random();
+            int index = random.Next(list.Count);
+
+            chasingTarget = list[index];
+            hasTarget = true;
+
+            if (chasingTarget.CompareTag("Prize"))
+            {
+                Reward reward = chasingTarget.GetComponent<Reward>();
+                reward.SetChasingPlayer(this);
+            }
+        }
+        
+        void moveTowardsTheTarget()
+        {
+            // // rotate to the target.
+            transform.LookAt(chasingTarget.transform);
+            
+            // move to the target
+            direction = chasingTarget.transform.position - transform.position;
+            
+            var rotateDirection = Vector3.ClampMagnitude(direction, 1f);
+            transform.Rotate(rotateDirection);
+            
+            // // Clamp so diagonal strafing isn't a speed advantage.
+            direction = Vector3.ClampMagnitude(direction, 1f);
+            // // Transforms direction from local space to world space.
+            // direction = transform.TransformDirection(direction);
+            // Multiply for desired ground speed.
+            direction *= autoMoveSpeedMultiplier;
+            // Finally move the character.
+            characterController.Move(direction * Time.deltaTime);
+        }
+
+        [TargetRpc]
+        public void TargetClearTarget(NetworkConnection target)
+        {
+            hasTarget = false;
+            chasingTarget = null;
+        }
+        
         void Update()
         {
             if (!base.IsOwner)
@@ -100,6 +172,18 @@ namespace Benchmark.Fishnet
             
             if (!characterController.enabled)
                 return;
+            
+            if (Configuration.autoControl)
+            {
+                if (!hasTarget)
+                {
+                    findChasingTarget();
+                }
+                else
+                {
+                    moveTowardsTheTarget();
+                }
+            }
 
             HandleTurning();
             HandleJumping();
@@ -194,6 +278,21 @@ namespace Benchmark.Fishnet
 
             // Finally move the character.
             characterController.Move(direction * Time.deltaTime);
+        }
+        
+        public void OnDestroy()
+        {
+            if (hasTarget && IsOwner)
+            {
+                if (chasingTarget)
+                {
+                    if (chasingTarget.CompareTag("Prize"))
+                    {
+                        Reward reward = chasingTarget.GetComponent<Reward>();
+                        reward.ClearChasingPlayer();
+                    }
+                }
+            }
         }
     }
 }
