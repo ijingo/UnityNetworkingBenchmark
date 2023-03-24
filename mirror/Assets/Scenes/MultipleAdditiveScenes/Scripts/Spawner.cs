@@ -10,7 +10,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         [ServerCallback]
         internal static void InitialSpawn(Scene scene)
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < Configuration.spawnNumber; i++)
                 SpawnReward(scene);
         }
 
@@ -31,7 +31,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         [ServerCallback]
         internal static void InitialSpawn(Scene scene)
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < Configuration.spawnNumber; i++)
                 SpawnIcosphere(scene);
         }
 

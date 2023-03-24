@@ -44,8 +44,8 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         
         IEnumerator StartHeadless()
         {
-            Debug.Log("Server: - file - s");
-            Debug.Log("Client: - file - c - hostIP - hostPort - enableAuto");
+            Debug.Log("Server: - file - s - spawnObjectCount");
+            Debug.Log("Client: - file - c - hostIP - enableAuto");
        
         
             string[] args = Environment.GetCommandLineArgs();
@@ -58,28 +58,28 @@ namespace Mirror.Examples.MultipleAdditiveScenes
             }
             else
             {
-                if (args.Length >= 3 && args[2] != "0")
-                {
-                    networkAddress = args[2];
-                }
-        
-                if (args.Length >= 4 && args[3] != "0")
-                {
-                }
-
-                if (args.Length >= 5 && args[4] != "0")
-                {
-                    Configuration.autoControl = bool.Parse(args[4]);
-                }
-
                 yield return new WaitForSeconds(1.0f);
 
                 if (args[1] == "s")
                 {
+                    if (args.Length >= 3)
+                    {
+                        Configuration.spawnNumber = int.Parse(args[2]);
+                    }
                     StartServer();
                 }
                 else if (args[1] == "c")
                 {
+                    if (args.Length >= 3)
+                    {
+                        networkAddress = args[2];
+                    }
+        
+                    if (args.Length >= 4)
+                    {
+                        Configuration.autoControl = bool.Parse(args[4]);
+                    }
+                    
                     yield return new WaitForSeconds(UnityEngine.Random.Range(0.0f, 2.0f));
                     StartClient();
                 }
