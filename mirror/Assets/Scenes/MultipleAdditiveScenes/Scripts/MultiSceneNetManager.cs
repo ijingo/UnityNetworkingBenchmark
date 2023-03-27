@@ -77,7 +77,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         
                     if (args.Length >= 4)
                     {
-                        Configuration.autoControl = bool.Parse(args[4]);
+                        Configuration.autoControl = bool.Parse(args[3]);
                     }
                     
                     yield return new WaitForSeconds(UnityEngine.Random.Range(0.0f, 2.0f));

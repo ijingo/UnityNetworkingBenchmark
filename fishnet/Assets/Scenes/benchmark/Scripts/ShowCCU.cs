@@ -19,7 +19,7 @@ namespace Benchmark.Fishnet
         {
             if (IsServer)
             {
-                playersConnected = NetworkManager.ClientManager.Clients.Count;
+                playersConnected = NetworkManager.ServerManager.Clients.Count;
             }
 
             ccuText.text = "Client counts: " + playersConnected;
