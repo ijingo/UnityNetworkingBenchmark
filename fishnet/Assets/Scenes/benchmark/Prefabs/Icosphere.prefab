@@ -169,6 +169,7 @@ MonoBehaviour:
   _networkBehaviours:
   - {fileID: 5066486375882957869}
   - {fileID: -3588480925807571900}
+  - {fileID: 5132395921519742166}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   _isNetworked: 1
@@ -203,7 +204,7 @@ MonoBehaviour:
     Rotation: 1
     Scale: 0
   _interpolation: 2
-  _extrapolation: 2
+  _extrapolation: 0
   _enableTeleport: 0
   _teleportThreshold: 1
   _clientAuthoritative: 0
@@ -252,9 +253,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218520098fbe58b4b8f0963ef41953f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 2
   _addedNetworkObject: {fileID: 5536078570471455198}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 5536078570471455198}
   color:
     serializedVersion: 2
     rgba: 4278190080
